@@ -9,7 +9,6 @@ function Home(props) {
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
-        <link href={link}>{link}</link>
       </Head>
 
       <main className={styles.main}>
@@ -17,6 +16,7 @@ function Home(props) {
           Welcome to Test branch 2 <a href="https://nextjs.org">Next.js!</a>
         </h2>
       </main>
+      <a href={link}>{link}</a>
     </div>
   )
 }
