@@ -13,8 +13,11 @@ function Home(props) {
 
       <main className={styles.main}>
         <h2 className={styles.title}>
-          Welcome to Test branch 2 <a href="https://nextjs.org">Next.js!</a>
+          Search user
         </h2>
+        <div>
+          <img src="../assests/algolia-blue-mark" alt="algolia-blue-mark"/>
+        </div>
       </main>
       <a href={link}>{link}</a>
     </div>
