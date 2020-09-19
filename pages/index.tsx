@@ -21,11 +21,12 @@ function Home(props) {
   )
 }
 
-Home.getServerSideProps = async (ctx) => {
-  // const res = await fetch('https://api.github.com/repos/vercel/next.js')
-  // const json = await res.json()
+export async function getServerSideProps(context) {
   const link = process.env.LINK;
-  return { link }
+  return {
+    props: { link }, // will be passed to the page component as props
+  }
 }
+
 
 export default Home;
