@@ -1,15 +1,38 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import algoliasearch from 'algoliasearch';
+import debounce from 'lodash.debounce';
 
 function Home(props) {
+  const [searchInputValue, setSearchInputValue] = useState(""); 
+
+  const [index, setIndex] = useState(null);
+
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    const client = algoliasearch('NSJ5JLKUGR', 'dee646598d711bfc8ca326b526bd40f9');
+    const index = client.initIndex('dev_search');
+    setIndex(index);
+  }, []) 
+
   const link = props.link;
   console.log({ link: props.link });
 
-  const [searchInputValue, setSearchInputValue] = useState(""); 
+  const search = debounce((query: string) => {
+      index.search(`${query}`, {
+        attributesToRetrieve: ['name'],
+        hitsPerPage: 50,
+      }).then(({ hits }) => {
+        console.log(hits);
+        setSearchResults(hits);
+      });
+  }, 2000, { trailing: true, leading: false });
 
   const onSearchValueChange = (e) => {
     setSearchInputValue(e.target.value);
+    search(e.target.value);
   }
 
   return (
@@ -27,6 +50,14 @@ function Home(props) {
           <img src="/assets/algolia-blue-mark.svg" alt="algolia-blue-mark"/>
           <input className={styles["search-input"]}type="text" value={searchInputValue} onChange={onSearchValueChange}/>
         </div>
+        <ul>
+
+        </ul>
+        {
+          searchResults.map((result) => (
+            <li key={result.name}>{`name: ${result.name}`}</li>
+          ))
+        }
       </main>
       <a href={link}>{link}</a>
     </div>
