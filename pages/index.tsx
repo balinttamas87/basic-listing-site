@@ -16,7 +16,7 @@ function Home(props) {
           Search user
         </h2>
         <div>
-          <img src="../assests/algolia-blue-mark" alt="algolia-blue-mark"/>
+          <img src="/assets/algolia-blue-mark.svg" alt="algolia-blue-mark"/>
         </div>
       </main>
       <a href={link}>{link}</a>
