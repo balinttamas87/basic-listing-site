@@ -1,14 +1,12 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import algoliasearch from 'algoliasearch';
 import debounce from 'lodash.debounce';
 
 function Home(props) {
   const [searchInputValue, setSearchInputValue] = useState(""); 
-
   const [index, setIndex] = useState(null);
-
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
@@ -20,7 +18,8 @@ function Home(props) {
   const link = props.link;
   console.log({ link: props.link });
 
-  const search = debounce((query: string) => {
+  const search = useRef(
+    debounce((query: string, index) => {
       index.search(`${query}`, {
         attributesToRetrieve: ['name'],
         hitsPerPage: 50,
@@ -28,11 +27,13 @@ function Home(props) {
         console.log(hits);
         setSearchResults(hits);
       });
-  }, 2000, { trailing: true, leading: false });
+  }, 2000, { trailing: true, leading: false })
+  ).current;
 
   const onSearchValueChange = (e) => {
-    setSearchInputValue(e.target.value);
-    search(e.target.value);
+    const value = e.target.value;
+    setSearchInputValue(value);
+    search(value, index);
   }
 
   return (
