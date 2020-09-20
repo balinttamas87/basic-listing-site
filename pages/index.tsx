@@ -5,7 +5,7 @@ function Home(props) {
   return (
     <>
       <h1>Home page</h1>
-      <Link href="/search">Click here to navigate to Search page --></Link>
+      <Link href="/search">Click here to navigate to Search page `{'-->'}</Link>
     </>
   );
 };
