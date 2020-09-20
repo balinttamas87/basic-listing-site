@@ -121,3 +121,15 @@
     flex-direction: column;
   }
 }
+
+.search-wrapper {
+  display: flex;
+}
+
+.search-input {
+  font-size: 2rem;
+}
+
+.li {
+  list-style-type: none;
+}
